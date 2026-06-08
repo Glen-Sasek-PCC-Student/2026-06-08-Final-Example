@@ -10,22 +10,26 @@
 
 using namespace std;
 
+const int MIN_DAY_MILES = 0;
+
 const string PROMPT_MILES = "How many miles do you want to ride this week? ";
 
 // Have fun with messages
 // Credit to copilot for content of GOODBYE_MESSAGE
 // Format by me.
 // PROMPT: shakespearian goodbye message parting is such sweet sorrow
-const string GOOBYE_MESSAGE = 
-  "\n\n"
-  "\tParting is such sweet sorrow;\n"
-  "\tyet let it be A softened ache\n"
-  "\tthat keeps our memory bright.\n"
-  "\tGo with sunshine in thy step and courage free,\n"
-  "\tTill Fortune weaves our paths together once more.\n"
-  "\tFarewell, dear heart—tread well,\n" 
-  "\tand keep me in thy sight\n";
+const string GOOBYE_MESSAGE = "Goodbye";
+  // Too long 
+  // "\n\n"
+  // "\tParting is such sweet sorrow;\n"
+  // "\tyet let it be A softened ache\n"
+  // "\tthat keeps our memory bright.\n"
+  // "\tGo with sunshine in thy step and courage free,\n"
+  // "\tTill Fortune weaves our paths together once more.\n"
+  // "\tFarewell, dear heart—tread well,\n" 
+  // "\tand keep me in thy sight\n";
 
+  const string WELCOME_MESSAGE = "Welcome to my Miles Tracker program.";
 
 // Function prototypes 
 // Have fun and be creative with welcome and goodbye messages!
@@ -56,18 +60,29 @@ void getInput(int &goal);
 // calculate and return the total miles for the week 
 int calcTotal();
 
+void visualizeMiles(int miles);
+
 int main() {
   welcome();
-  int miles = 0;
-  getInput(miles);
+  int goal_miles = 0;
+  getInput(goal_miles);
   
-  if(miles <= 0) {
+  if(goal_miles <= 0) {
     cout << "No miles were tracked this week." << endl;
   } else {
-    cout << "TODO: Track miles for : " << miles << " miles entered." << endl;
+    int road_miles = calcTotal();
+    cout << "📢 You rode " << road_miles << " miles this week" << endl;
+    if(road_miles > goal_miles) {
+      int exceeded_by = road_miles - goal_miles;
+      cout << "🥇 Great job! You exceeded your goal by " << exceeded_by << " miles!" << endl;
+    } else if(road_miles == goal_miles) {
+      cout << "😥 Good job! You met your goal!" << endl;
+    } else {
+      int missed_it_by_that_much = goal_miles - road_miles;
+      cout << "💩 Uh oh! You missed your goal by " << missed_it_by_that_much << " miles!" << endl;
+    }
   }
 
-  cout << "TODO: Implement main function" << endl;
   goodbye();
   return 0;
 }
@@ -108,22 +123,79 @@ void getInput(int &goal) {
       cin.ignore(numeric_limits<streamsize>::max(), '\n');      
     }
   }
-
-
-
 }
 
 int calcTotal() {
-  cout << "TODO: Implement calcTotal function" << endl;
-  return 0;
+  int total_miles = 0;
+  
+  for(int i = 1; i <=7; i++) {
+    string prompt_day_of_week = "How many miles did you ride on ";
+    string day_name = "";
+    string question_mark = "?";
+    int day_miles;
+    switch(i) {
+      case 1:
+       day_name = "Monday";
+       break;
+      case 2:
+       day_name = "Tuesday";
+       break;    
+      case 3:
+       day_name = "Wednesday";
+       break;  
+      case 4:
+       day_name = "Thursday";
+       break;  
+      case 5:
+       day_name = "Friday";
+       break;  
+      case 6:
+       day_name = "Saturday";
+       break;  
+      case 7:
+       day_name = "Sunday";
+       break;    
+      default:
+        cout << "error day number not supported: " << i << endl;                                   
+    }
+    prompt_day_of_week += day_name + question_mark;
+
+    bool next = true;
+    while(next) {
+      cout << prompt_day_of_week;
+      cin >> day_miles;
+      if(cin) {
+        if(day_miles >= MIN_DAY_MILES) {
+          total_miles += day_miles; // total_miles = total_miles + day_miles;
+          visualizeMiles(day_miles);
+          next = false;
+        } else {
+          cout << "Miles must be " << MIN_DAY_MILES << " or greater!" << endl;
+        }
+      } else {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      }
+    }
+  }
+
+  return total_miles;
 }
 
 void welcome() {
-  cout << "TODO: Implement welcome function" << endl;
+  cout << WELCOME_MESSAGE << endl;
 }
 
 void goodbye() {
   cout << GOOBYE_MESSAGE << endl;
+}
+
+void visualizeMiles(int miles) {
+  cout << endl;
+  for(int i = 0; i < miles; i++) {
+    cout << "🚴 "; 
+  }
+  cout << endl;
 }
 
 

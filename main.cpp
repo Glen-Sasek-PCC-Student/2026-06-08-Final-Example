@@ -64,7 +64,7 @@ int main() {
   if(miles <= 0) {
     cout << "No miles were tracked this week." << endl;
   } else {
-
+    cout << "TODO: Track miles for : " << miles << " miles entered." << endl;
   }
 
   cout << "TODO: Implement main function" << endl;
@@ -124,7 +124,6 @@ void welcome() {
 
 void goodbye() {
   cout << GOOBYE_MESSAGE << endl;
-  cout << "TODO: Implement goodbye function" << endl;
 }
 
 

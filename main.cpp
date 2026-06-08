@@ -6,10 +6,11 @@
 
 // ------------- CODE -------------
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
-
+const string PROMPT_MILES = "How many miles do you want to ride this week? ";
 
 // Have fun with messages
 // Credit to copilot for content of GOODBYE_MESSAGE
@@ -57,6 +58,15 @@ int calcTotal();
 
 int main() {
   welcome();
+  int miles = 0;
+  getInput(miles);
+  
+  if(miles <= 0) {
+    cout << "No miles were tracked this week." << endl;
+  } else {
+
+  }
+
   cout << "TODO: Implement main function" << endl;
   goodbye();
   return 0;
@@ -64,7 +74,43 @@ int main() {
 
 // Function implementations (if any)
 void getInput(int &goal) {
-  cout << "TODO: Implement getInput function" << endl;
+  // Demonstrating equivalent validation loops 
+
+  // cout << PROMPT_MILES << endl;
+  // cin >> goal;
+  // while(!cin) {
+  //   cin.clear();
+  //   cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  //   cout << PROMPT_MILES << endl;
+  //   cin >> goal;
+  // }
+
+  // bool next = true;
+  // do {
+  //   cout << PROMPT_MILES << endl;
+  //   cin >> goal;
+  //   if(cin) {
+  //     next = false;
+  //   }  else {
+  //     cin.clear();
+  //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  //   }
+  // } while(next);
+
+  bool next = true;
+  while(next) {
+    cout << PROMPT_MILES << endl;
+    cin >> goal;
+    if(cin) {
+      next = false;
+    } else {
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');      
+    }
+  }
+
+
+
 }
 
 int calcTotal() {
